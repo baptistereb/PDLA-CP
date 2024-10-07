@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     pseudo VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    user_type ENUM('users', 'volunteer', 'moderator') NOT NULL
+    user_type ENUM('user', 'volunteer', 'moderator') NOT NULL
 );
 
 -- Création de la table mission
