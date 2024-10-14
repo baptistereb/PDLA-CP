@@ -1,5 +1,7 @@
 package org.pdla;
 
+import org.pdla.models.UserManagement;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserManagementTest {

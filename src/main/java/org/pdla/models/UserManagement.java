@@ -1,4 +1,4 @@
-package org.pdla;
+package org.pdla.models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

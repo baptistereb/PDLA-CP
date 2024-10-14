@@ -1,4 +1,4 @@
-package org.pdla;
+package org.pdla.models;
 
 public class Credentials {
     // Hardcoded credentials
