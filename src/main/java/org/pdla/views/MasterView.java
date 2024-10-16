@@ -11,13 +11,13 @@ public class MasterView {
     public MasterView( int width, int height, String title) {
         this.width = width;
         this.height = height;
-        createAndShowGUI();
+        createWindow();
         setTitle(title);
 
         SignupForm signupForm = new SignupForm(this.frame);
     }
 
-    private void createAndShowGUI() {
+    private void createWindow() {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setPreferredSize(new Dimension(this.width, this.height));
         this.frame.pack();
