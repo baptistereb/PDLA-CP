@@ -1,4 +1,4 @@
 package org.pdla.views;
 
-public class FeedView {
+public class Feed {
 }
