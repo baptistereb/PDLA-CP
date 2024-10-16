@@ -1,4 +1,4 @@
 package org.pdla.controllers;
 
-public class Feed {
+public class FeedController {
 }
