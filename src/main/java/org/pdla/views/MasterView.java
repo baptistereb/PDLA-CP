@@ -7,10 +7,17 @@ public class MasterView {
     private int width;
     private int height;
     private JFrame frame = new JFrame("Default");
+    private LoginForm loginForm;
+    private SignupForm signupForm;
+
 
     public MasterView( int width, int height, String title) {
         this.width = width;
         this.height = height;
+
+        loginForm = new LoginForm(this.frame, this);
+        signupForm = new SignupForm(this.frame, this);
+
         createWindow();
         setTitle(title);
 
@@ -29,10 +36,13 @@ public class MasterView {
     }
 
     public void loadWindow(String window) {
+        frame.getContentPane().removeAll(); // Supprime tout le contenu de la fenêtre
+        frame.revalidate();                 // Redessine la fenêtre pour appliquer les changements
+        frame.repaint();                    // Rafraîchit l'affichage de la fenêtre
         if(window.equals("login")) {
-            LoginForm loginForm = new LoginForm(this.frame);
+            loginForm.createForm();
         } else if(window.equals("signup")) {
-            SignupForm signupForm = new SignupForm(this.frame);
+            signupForm.createForm();
         }
     }
 }

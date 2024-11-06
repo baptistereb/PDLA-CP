@@ -6,13 +6,14 @@ import java.awt.*;
 
 public class SignupForm {
     private JFrame frame;
+    private MasterView masterView;
 
-    public SignupForm(JFrame frame) {
+    public SignupForm(JFrame frame, MasterView mv) {
         this.frame = frame;
-        createForm();
+        this.masterView = mv;
     }
 
-    private void createForm() {
+    public void createForm() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 

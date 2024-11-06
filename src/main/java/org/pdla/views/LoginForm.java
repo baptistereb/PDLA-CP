@@ -6,13 +6,14 @@ import java.awt.*;
 
 public class LoginForm {
     private JFrame frame;
+    private MasterView masterView;
 
-    public LoginForm(JFrame frame) {
+    public LoginForm(JFrame frame, MasterView mv) {
         this.frame = frame;
-        createForm();
+        this.masterView = mv;
     }
 
-    private void createForm() {
+    public void createForm() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -54,7 +55,7 @@ public class LoginForm {
 
             if(loged) {
                 // on lance une autre fenetre
-                frame.dispose();                      // on ferme cette fenêtre du coup
+                masterView.loadWindow("signup");
             } else {
                 panel.add(failed_label);
                 frame.setVisible(true);
