@@ -53,8 +53,8 @@ public class LoginForm {
             );
 
             if(loged) {
-                panel.add(logged_label);
-                frame.setVisible(true);
+                // on lance une autre fenetre
+                frame.dispose();                      // on ferme cette fenêtre du coup
             } else {
                 panel.add(failed_label);
                 frame.setVisible(true);

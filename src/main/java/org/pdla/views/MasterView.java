@@ -14,7 +14,7 @@ public class MasterView {
         createWindow();
         setTitle(title);
 
-        SignupForm signupForm = new SignupForm(this.frame);
+        loadWindow("login");
     }
 
     private void createWindow() {
@@ -26,5 +26,13 @@ public class MasterView {
 
     private void setTitle(String name) {
         this.frame.setTitle(name);
+    }
+
+    public void loadWindow(String window) {
+        if(window.equals("login")) {
+            LoginForm loginForm = new LoginForm(this.frame);
+        } else if(window.equals("signup")) {
+            SignupForm signupForm = new SignupForm(this.frame);
+        }
     }
 }
