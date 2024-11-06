@@ -3,6 +3,7 @@ import org.pdla.controllers.LoginFormController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class LoginForm {
     private JFrame frame;
@@ -27,15 +28,22 @@ public class LoginForm {
         JButton loginButton = new JButton("Login");
         loginButton.setPreferredSize(new Dimension(200, 30));
 
+        JButton signupButton = new JButton("Inscription");
+        signupButton.setPreferredSize(new Dimension(200, 30));
+
         JLabel failed_label = new JLabel("Identifiant ou mot de passe incorrecte");
 
         panel.add(username);
         panel.add(password);
         panel.add(loginButton);
+        panel.add(Box.createVerticalStrut(10)); // Espace entre les boutons
+        panel.add(signupButton);
 
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
+
+        signupButton.addActionListener(e -> {masterView.loadWindow("signup");});
 
         loginButton.addActionListener(e -> {
             panel.remove(failed_label);
