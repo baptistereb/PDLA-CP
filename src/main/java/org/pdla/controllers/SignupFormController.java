@@ -15,6 +15,9 @@ public class SignupFormController {
         if (username.isEmpty() || password.isEmpty() || user_type.isEmpty()) {
             return false;
         }
+        if(userManagement.UserExists(username)){
+            return false;
+        }
         userManagement.CreateUser(username, password, user_type);
         return true;
     }
