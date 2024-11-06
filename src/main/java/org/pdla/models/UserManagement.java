@@ -9,7 +9,7 @@ import java.util.Objects;
 public class UserManagement {
     public void CreateUser(String username, String password, String user_type) {
         String insertSQL = "INSERT INTO users (pseudo, password, user_type) VALUES (?, ?, ?)";
-        DatabaseConnection dbconn= new DatabaseConnection();
+        DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
@@ -34,7 +34,7 @@ public class UserManagement {
 
     public void DeleteUser(String username) {
         String deleteSQL = "DELETE FROM users WHERE pseudo = ?";
-        DatabaseConnection dbconn= new DatabaseConnection();
+        DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 
@@ -57,7 +57,7 @@ public class UserManagement {
 
     public boolean Login(String username, String password) {
         String SQL = "SELECT password FROM users WHERE pseudo = ?";
-        DatabaseConnection dbconn= new DatabaseConnection();
+        DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
 
@@ -75,6 +75,24 @@ public class UserManagement {
             e.printStackTrace();
         }
         dbconn.closeConnection();
+        return false;
+    }
+
+    public boolean UserExists(String username) {
+        String SQL = "SELECT * FROM users WHERE pseudo = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking if a user exists in the database.");
+            e.printStackTrace();
+        }
         return false;
     }
 }
