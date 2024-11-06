@@ -33,16 +33,22 @@ public class SignupForm {
         comboBox.addItem("volunteer");
         comboBox.addItem("moderator");
 
+        JButton loginButton = new JButton("Login");
+        loginButton.setPreferredSize(new Dimension(200, 30));
+
         panel.add(username);
         panel.add(password);
         panel.add(comboBox);
         panel.add(signupButton);
+        panel.add(loginButton);
 
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
         JLabel success_label = new JLabel("User created successfully");
         JLabel fail_label = new JLabel("Failed to create user");
+
+        loginButton.addActionListener(e -> {masterView.loadWindow("login");});
 
         signupButton.addActionListener(e -> {
             panel.remove(success_label);
