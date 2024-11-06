@@ -9,6 +9,7 @@ public class MasterView {
     private JFrame frame = new JFrame("Default");
     private LoginForm loginForm;
     private SignupForm signupForm;
+    private Feed feed;
 
 
     public MasterView( int width, int height, String title) {
@@ -17,6 +18,7 @@ public class MasterView {
 
         loginForm = new LoginForm(this.frame, this);
         signupForm = new SignupForm(this.frame, this);
+        feed = new Feed(this.frame, this);
 
         createWindow();
         setTitle(title);
@@ -43,6 +45,8 @@ public class MasterView {
             loginForm.createForm();
         } else if(window.equals("signup")) {
             signupForm.createForm();
+        } else if(window.equals("feed")) {
+            feed.createPage();
         }
     }
 }

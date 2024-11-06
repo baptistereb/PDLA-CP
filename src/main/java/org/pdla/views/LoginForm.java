@@ -61,7 +61,7 @@ public class LoginForm {
 
             if(loged) {
                 // on lance une autre fenetre
-                masterView.loadWindow("signup");
+                masterView.loadWindow("feed");
             } else {
                 panel.add(failed_label);
                 frame.setVisible(true);
