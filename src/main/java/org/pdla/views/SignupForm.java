@@ -1,6 +1,6 @@
 package org.pdla.views;
-import org.pdla.controllers.SignupFormController;
 
+import org.pdla.controllers.SignupFormController;
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,15 +40,30 @@ public class SignupForm {
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
+        JLabel success_label = new JLabel("User created successfully");
+        JLabel fail_label = new JLabel("Failed to create user");
 
         signupButton.addActionListener(e -> {
+            panel.remove(success_label);
+            panel.remove(fail_label);
+            panel.revalidate();
+            panel.repaint();
+            frame.setVisible(true);
+
             SignupFormController signupFormController = new SignupFormController();
-            signupFormController.Signup(
+            boolean state =signupFormController.Signup(
                     username.getText(),
-                    new String(password.getPassword()), // Récupérer le mot de passe depuis JPasswordField
+                    new String(password.getPassword()),
                     comboBox.getSelectedItem().toString()
             );
+            if (state) {
+                panel.add(success_label);
+                frame.setVisible(true);
+            }
+            else{
+                panel.add(fail_label);
+                frame.setVisible(true);
+            }
         });
     }
-    }
-
+}
