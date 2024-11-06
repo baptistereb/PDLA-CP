@@ -27,7 +27,6 @@ public class LoginForm {
         JButton loginButton = new JButton("Login");
         loginButton.setPreferredSize(new Dimension(200, 30));
 
-        JLabel logged_label = new JLabel("Vous êtes connecté");
         JLabel failed_label = new JLabel("Identifiant ou mot de passe incorrecte");
 
         panel.add(username);
@@ -39,7 +38,6 @@ public class LoginForm {
         frame.setVisible(true);
 
         loginButton.addActionListener(e -> {
-            panel.remove(logged_label);
             panel.remove(failed_label);
 
             // actualiser la vue
