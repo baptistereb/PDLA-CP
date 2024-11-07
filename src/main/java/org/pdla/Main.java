@@ -3,6 +3,6 @@ import org.pdla.views.MasterView;
 
 public class Main {
     public static void main(String[] args) {
-        MasterView window = new MasterView(1000, 1000, "PourDeLaideAidante");
+        MasterView window = new MasterView(1000, 500, "PourDeLaideAidante");
     }
 }
