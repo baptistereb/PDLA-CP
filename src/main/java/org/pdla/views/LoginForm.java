@@ -28,7 +28,7 @@ public class LoginForm {
         JButton loginButton = new JButton("Login");
         loginButton.setPreferredSize(new Dimension(200, 30));
 
-        JButton signupButton = new JButton("Signup");
+        JButton signupButton = new JButton("go to signup page");
         signupButton.setPreferredSize(new Dimension(200, 30));
 
         JLabel failed_label = new JLabel("Identifiant ou mot de passe incorrecte");

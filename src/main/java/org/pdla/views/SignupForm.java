@@ -33,7 +33,7 @@ public class SignupForm {
         comboBox.addItem("volunteer");
         comboBox.addItem("moderator");
 
-        JButton loginButton = new JButton("Login");
+        JButton loginButton = new JButton("go to login page");
         loginButton.setPreferredSize(new Dimension(200, 30));
 
         panel.add(username);
