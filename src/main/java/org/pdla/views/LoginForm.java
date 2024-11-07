@@ -3,7 +3,6 @@ import org.pdla.controllers.LoginFormController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class LoginForm {
     private JFrame frame;
@@ -18,52 +17,69 @@ public class LoginForm {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel();
+        JLabel titleLabel = new JLabel("CONNECTION", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(5, 0, 5, 0);
+
+        JLabel usernameLabel = new JLabel("Username:");
         JTextField username = new JTextField();
         username.setPreferredSize(new Dimension(200, 30));
 
+        JLabel passwordLabel = new JLabel("Password:");
         JPasswordField password = new JPasswordField();
         password.setPreferredSize(new Dimension(200, 30));
 
         JButton loginButton = new JButton("Login");
         loginButton.setPreferredSize(new Dimension(200, 30));
 
-        JButton signupButton = new JButton("Signup");
+        JButton signupButton = new JButton("go to signup page");
         signupButton.setPreferredSize(new Dimension(200, 30));
 
-        JLabel failed_label = new JLabel("Identifiant ou mot de passe incorrecte");
+        JLabel failedLabel = new JLabel("Identifiant ou mot de passe incorrecte");
+        failedLabel.setForeground(Color.RED);
 
-        panel.add(username);
-        panel.add(password);
-        panel.add(loginButton);
-        panel.add(Box.createVerticalStrut(10)); // Espace entre les boutons
-        panel.add(signupButton);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panel.add(usernameLabel, constraints);
+        constraints.gridy = 1;
+        panel.add(username, constraints);
+        constraints.gridy = 2;
+        panel.add(passwordLabel, constraints);
+        constraints.gridy = 3;
+        panel.add(password, constraints);
+        constraints.gridy = 4;
+        panel.add(loginButton, constraints);
+        constraints.gridy = 5;
+        panel.add(signupButton, constraints);
 
+        frame.add(titleLabel, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
+        frame.setLocationRelativeTo(null); // Centre la fenêtre sur l'écran
         frame.setVisible(true);
 
-        signupButton.addActionListener(e -> {masterView.loadWindow("signup");});
+        signupButton.addActionListener(e -> masterView.loadWindow("signup"));
 
         loginButton.addActionListener(e -> {
-            panel.remove(failed_label);
-
-            // actualiser la vue
+            panel.remove(failedLabel);
             panel.revalidate();
             panel.repaint();
-            frame.setVisible(true);
 
             LoginFormController loginFormController = new LoginFormController();
-            boolean loged = loginFormController.Login(
-                username.getText(),
-                new String(password.getPassword())
+            boolean logged = loginFormController.Login(
+                    username.getText(),
+                    new String(password.getPassword())
             );
 
-            if(loged) {
-                // on lance une autre fenetre
+            if (logged) {
                 masterView.loadWindow("feed");
             } else {
-                panel.add(failed_label);
+                constraints.gridy = 4;
+                panel.add(failedLabel, constraints);
                 frame.setVisible(true);
             }
         });
