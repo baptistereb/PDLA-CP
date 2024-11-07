@@ -19,8 +19,6 @@ public class DatabaseConnection {
                     credentials.getPassword()
             );
 
-            System.out.println("Connection established successfully.");
-
         } catch (SQLException e) {
             System.out.println("Failed to connect to the database.");
             e.printStackTrace();
