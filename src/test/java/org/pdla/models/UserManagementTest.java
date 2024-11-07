@@ -1,4 +1,4 @@
-package org.pdla;
+package org.pdla.models;
 
 import org.pdla.models.UserManagement;
 
