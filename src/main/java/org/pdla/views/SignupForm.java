@@ -88,7 +88,7 @@ public class SignupForm {
             );
 
             // Affichage du message de succès ou d'échec
-            constraints.gridy = 5;
+            constraints.gridy = 7;
             if (state) {
                 panel.add(successLabel, constraints);
             } else {

@@ -78,7 +78,7 @@ public class LoginForm {
             if (logged) {
                 masterView.loadWindow("feed");
             } else {
-                constraints.gridy = 4;
+                constraints.gridy = 6;
                 panel.add(failedLabel, constraints);
                 frame.setVisible(true);
             }
