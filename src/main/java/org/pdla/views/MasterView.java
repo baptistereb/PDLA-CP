@@ -9,7 +9,9 @@ public class MasterView {
     private JFrame frame = new JFrame("Default");
     private LoginForm loginForm;
     private SignupForm signupForm;
-    private Feed feed;
+    private FeedVolunteer feed_volunteer;
+    private FeedUser feed_user;
+    private FeedModerator feed_moderator;
 
 
     public MasterView( int width, int height, String title) {
@@ -18,7 +20,9 @@ public class MasterView {
 
         loginForm = new LoginForm(this.frame, this);
         signupForm = new SignupForm(this.frame, this);
-        feed = new Feed(this.frame, this);
+        feed_volunteer = new FeedVolunteer(this.frame, this);
+        feed_user = new FeedUser(this.frame, this);
+        feed_moderator = new FeedModerator(this.frame, this);
 
         createWindow();
         setTitle(title);
@@ -45,8 +49,12 @@ public class MasterView {
             loginForm.createForm();
         } else if(window.equals("signup")) {
             signupForm.createForm();
-        } else if(window.equals("feed")) {
-            feed.createPage();
+        } else if(window.equals("feed_volunteer")) {
+            feed_volunteer.createPage();
+        } else if(window.equals("feed_user")) {
+            feed_user.createPage();
+        } else if(window.equals("feed_moderator")) {
+            feed_moderator.createPage();
         }
     }
 }

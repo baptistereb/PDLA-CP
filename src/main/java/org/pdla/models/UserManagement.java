@@ -95,4 +95,28 @@ public class UserManagement {
         }
         return false;
     }
+
+    public String getUserType(String username) {
+        String SQL = "SELECT user_type FROM users WHERE pseudo = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("user_type");
+                } else {
+                    System.out.println("Error : User not found"); // Ou gérer autrement si l'utilisateur n'existe pas
+                    System.exit(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking the user type in the database.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return "Error";
+    }
 }

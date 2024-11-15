@@ -12,4 +12,9 @@ public class LoginFormController {
         //TODO Check if data is well formated
         return userManagement.Login(username, password);
     }
+
+    public String getUserType(String username) {
+        UserManagement userManagement = new UserManagement();
+        return userManagement.getUserType(username);
+    }
 }

@@ -1,16 +1,15 @@
 package org.pdla.views;
-import org.pdla.controllers.FeedController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class Feed {
+public class FeedVolunteer {
     private JFrame frame;
     private MasterView masterView;
 
-    public Feed(JFrame frame, MasterView mv) {
+    public FeedVolunteer(JFrame frame, MasterView mv) {
         this.frame = frame;
         this.masterView = mv;
     }
@@ -20,7 +19,7 @@ public class Feed {
         frame.setLayout(new BorderLayout());
 
         List<List<String>> posts = Arrays.asList(
-                Arrays.asList("Jean Dupont", "Voici le texte de la première publication."),
+                Arrays.asList("volunteer", "Voici le texte de la première publication."),
                 Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
                 Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
                 Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),

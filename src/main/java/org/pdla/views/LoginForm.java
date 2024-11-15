@@ -3,6 +3,7 @@ import org.pdla.controllers.LoginFormController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class LoginForm {
     private JFrame frame;
@@ -76,7 +77,14 @@ public class LoginForm {
             );
 
             if (logged) {
-                masterView.loadWindow("feed");
+                String user_type = loginFormController.getUserType(username.getText());
+
+                switch (user_type) {
+                    case "moderator" -> masterView.loadWindow("feed_moderator");
+                    case "volunteer" -> masterView.loadWindow("feed_volunteer");
+                    case "user" -> masterView.loadWindow("feed_user");
+                    default -> throw new IllegalStateException("Unexpected user type value: " + user_type +". Should be moderator, volunteer or user");
+                }
             } else {
                 constraints.gridy = 6;
                 panel.add(failedLabel, constraints);
