@@ -12,6 +12,7 @@ public class MasterView {
     private FeedVolunteer feed_volunteer;
     private FeedUser feed_user;
     private FeedModerator feed_moderator;
+    private AskHelpForm ask_help_moderator;
 
 
     public MasterView( int width, int height, String title) {
@@ -23,6 +24,7 @@ public class MasterView {
         feed_volunteer = new FeedVolunteer(this.frame, this);
         feed_user = new FeedUser(this.frame, this);
         feed_moderator = new FeedModerator(this.frame, this);
+        ask_help_moderator = new AskHelpForm(this.frame, this);
 
         createWindow();
         setTitle(title);
@@ -55,6 +57,8 @@ public class MasterView {
             feed_user.createPage();
         } else if(window.equals("feed_moderator")) {
             feed_moderator.createPage();
+        } else if(window.equals("ask_help")) {
+            ask_help_moderator.createForm();
         }
     }
 }

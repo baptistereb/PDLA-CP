@@ -67,6 +67,12 @@ public class FeedUser {
         logoutButton.addActionListener(e -> masterView.loadWindow("login"));
         logoutPanel.add(logoutButton);
 
+
+        JButton askButton = new JButton("Ask some help");
+        askButton.setPreferredSize(new Dimension(200, 30));
+        askButton.addActionListener(e -> masterView.loadWindow("ask_help"));
+        logoutPanel.add(askButton);
+
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(logoutPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
