@@ -67,6 +67,11 @@ public class FeedVolunteer {
         logoutButton.addActionListener(e -> masterView.loadWindow("login"));
         logoutPanel.add(logoutButton);
 
+        JButton offerButton = new JButton("Offer help");
+        offerButton.setPreferredSize(new Dimension(200, 30));
+        offerButton.addActionListener(e -> masterView.loadWindow("offer_help"));
+        logoutPanel.add(offerButton);
+
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.add(logoutPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
