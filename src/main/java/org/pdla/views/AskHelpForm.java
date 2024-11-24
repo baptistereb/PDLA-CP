@@ -69,7 +69,6 @@ public class AskHelpForm {
 
             AskHelpFormController askHelpFormController = new AskHelpFormController();
             boolean state = askHelpFormController.sendRequest(
-                    3, //some user_id
                     ask.getText()
             );
 
