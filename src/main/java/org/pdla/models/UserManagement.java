@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserManagement {
+
+    private static int user_id = 0;
+
     public void CreateUser(String username, String password, String user_type) {
         String insertSQL = "INSERT INTO users (pseudo, password, user_type) VALUES (?, ?, ?)";
         DatabaseConnection dbconn = new DatabaseConnection();
@@ -56,7 +59,7 @@ public class UserManagement {
     }
 
     public boolean Login(String username, String password) {
-        String SQL = "SELECT password FROM users WHERE pseudo = ?";
+        String SQL = "SELECT user_id,password FROM users WHERE pseudo = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
@@ -65,7 +68,12 @@ public class UserManagement {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getString("password").equals(password);
+                    if(resultSet.getString("password").equals(password)){
+                        user_id = resultSet.getInt("user_id");
+                        return true;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
@@ -76,6 +84,10 @@ public class UserManagement {
         }
         dbconn.closeConnection();
         return false;
+    }
+
+    public int getMyID() {
+        return user_id;
     }
 
     public boolean UserExists(String username) {
@@ -119,4 +131,6 @@ public class UserManagement {
         }
         return "Error";
     }
+
+
 }
