@@ -1,9 +1,6 @@
 package org.pdla.controllers;
 
-import org.pdla.models.ConnectionManagement;
 import org.pdla.models.UserManagement;
-
-import javax.swing.*;
 
 public class SignupFormController {
     public SignupFormController() {
