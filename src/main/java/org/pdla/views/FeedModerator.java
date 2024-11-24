@@ -1,5 +1,8 @@
 package org.pdla.views;
 
+import org.pdla.controllers.FeedModeratorController;
+import org.pdla.models.MissionManagement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
@@ -18,16 +21,8 @@ public class FeedModerator {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        List<List<String>> posts = Arrays.asList(
-                Arrays.asList("Moderator", "Voici le texte de la première publication."),
-                Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
-                Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
-                Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
-                Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
-                Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
-                Arrays.asList("Claire Martin", "Texte de la seconde publication, avec plus de détails."),
-                Arrays.asList("Paul Durand", "Encore une autre publication à afficher dans le feed.")
-        );
+        MissionManagement missionManagement = new MissionManagement();
+        List<List<String>> posts = missionManagement.getMissionsbystate("waiting");
 
         JPanel feedPanel = new JPanel();
         feedPanel.setLayout(new BoxLayout(feedPanel, BoxLayout.Y_AXIS));
@@ -37,20 +32,32 @@ public class FeedModerator {
             postPanel.setLayout(new BorderLayout());
             postPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            JLabel nameLabel = new JLabel("Nom : " + post.get(0));
+            JLabel nameLabel = new JLabel("Nom : " + post.get(2));
             JTextArea postText = new JTextArea(post.get(1));
             postText.setLineWrap(true);
             postText.setWrapStyleWord(true);
             postText.setEditable(false);
 
-            JButton joinButton = new JButton("Rejoindre");
-            joinButton.addActionListener(e -> {
-                // keskispass quand on clique sur rejoindre
+            JPanel actionPanel = new JPanel();
+            JButton acceptButton = new JButton("Accepter");
+            FeedModeratorController feedModeratorController = new FeedModeratorController();
+            acceptButton.addActionListener(e -> {
+                // keskispass quand on clique sur accepter
+                feedModeratorController.validateMission(post.get(0));
+                masterView.loadWindow("feed_moderator");
             });
+            actionPanel.add(acceptButton);
+            JButton refuseButton = new JButton("Refuser");
+            refuseButton.addActionListener(e -> {
+                // keskispass quand on clique sur refuser
+                feedModeratorController.refuseMission(post.get(0));
+                masterView.loadWindow("feed_moderator");
+            });
+            actionPanel.add(refuseButton);
 
             postPanel.add(nameLabel, BorderLayout.NORTH);
             postPanel.add(new JScrollPane(postText), BorderLayout.CENTER);
-            postPanel.add(joinButton, BorderLayout.SOUTH);
+            postPanel.add(actionPanel, BorderLayout.SOUTH);
 
             feedPanel.add(postPanel);
             feedPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espacement entre les posts

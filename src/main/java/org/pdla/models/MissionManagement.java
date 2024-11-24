@@ -113,4 +113,24 @@ public class MissionManagement {
         return missions;
     }
 
+    public void validateMission(int mission_id) {
+        String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+
+        try (PreparedStatement preparedStatement = dbconn.getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, "valid");
+            preparedStatement.setInt(2, mission_id);
+
+            // Exécuter la requête
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Mission validate successfully.");
+            } else {
+                System.out.println("Failed to validate mission.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la validation de la mission : " + e.getMessage());
+        }
+    }
 }
