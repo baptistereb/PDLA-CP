@@ -8,8 +8,8 @@ public class FeedModeratorController {
         missionManagement.validateMission(Integer.parseInt(s));
     }
 
-    public void refuseMission(String s) {
+    public void refuseMission(String s, String reason) {
         MissionManagement missionManagement = new MissionManagement();
-        missionManagement.deleteMission(Integer.parseInt(s));
+        missionManagement.refuseMission(Integer.parseInt(s), reason);
     }
 }

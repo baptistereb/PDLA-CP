@@ -48,10 +48,15 @@ public class FeedModerator {
                 masterView.loadWindow("feed_moderator");
             });
             actionPanel.add(acceptButton);
+
+            JTextField actionText = new JTextField();
+            actionText.setPreferredSize(new Dimension(200, 30));
+            actionPanel.add(actionText);
+
             JButton refuseButton = new JButton("Refuse");
             refuseButton.addActionListener(e -> {
                 // keskispass quand on clique sur refuser
-                feedModeratorController.refuseMission(post.get(0));
+                feedModeratorController.refuseMission(post.get(0), actionText.getText());
                 masterView.loadWindow("feed_moderator");
             });
             actionPanel.add(refuseButton);

@@ -133,4 +133,26 @@ public class MissionManagement {
             System.err.println("Erreur lors de la validation de la mission : " + e.getMessage());
         }
     }
+
+    public void refuseMission(int mission_id, String reason) {
+        String query = "UPDATE missions SET mission_state = ?, motif = ? WHERE mission_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+
+        try (PreparedStatement preparedStatement = dbconn.getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, "realized");
+            preparedStatement.setString(2, reason);
+            preparedStatement.setInt(3, mission_id);
+
+            // Exécuter la requête
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Mission refused successfully.");
+            } else {
+                System.out.println("Failed to refuse the mission.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la validation de la mission : " + e.getMessage());
+        }
+    }
 }
