@@ -86,7 +86,7 @@ public class UserManagement {
         return false;
     }
 
-    public int getMyID() {
+    public static int getMyID() {
         return user_id;
     }
 

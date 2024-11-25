@@ -155,4 +155,29 @@ public class MissionManagement {
             System.err.println("Erreur lors de la validation de la mission : " + e.getMessage());
         }
     }
+
+    public void joinMission(int mission_id, int myID, String connection_type) {
+        String insertSQL = "INSERT INTO connections (mission_id, user_id, connection_type) VALUES (?, ?, ?)";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+
+            preparedStatement.setInt(1, mission_id);
+            preparedStatement.setInt(2, myID);
+            preparedStatement.setString(3, connection_type);
+
+            int rowsInserted = preparedStatement.executeUpdate();
+
+            if (rowsInserted > 0) {
+                System.out.println("Join the mission inserted successfully.");
+            } else {
+                System.out.println("Failed to join the mission.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error inserting connection into the database.");
+            e.printStackTrace();
+        }
+        dbconn.closeConnection();
+    }
 }
