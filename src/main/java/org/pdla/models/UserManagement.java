@@ -91,7 +91,7 @@ public class UserManagement {
     }
 
 
-    public String getPseudo(int user_id) {
+    public static String getPseudo(int user_id) {
         String SQL = "SELECT pseudo FROM users WHERE user_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();

@@ -2,6 +2,7 @@ package org.pdla.views;
 
 import org.pdla.controllers.FeedModeratorController;
 import org.pdla.models.MissionManagement;
+import org.pdla.models.UserManagement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,14 +33,14 @@ public class FeedModerator {
             postPanel.setLayout(new BorderLayout());
             postPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            JLabel nameLabel = new JLabel("Nom : " + post.get(2));
+            JLabel nameLabel = new JLabel("Name : " + UserManagement.getPseudo(Integer.parseInt(post.get(2))) + " ; type : "+ post.get(4));
             JTextArea postText = new JTextArea(post.get(1));
             postText.setLineWrap(true);
             postText.setWrapStyleWord(true);
             postText.setEditable(false);
 
             JPanel actionPanel = new JPanel();
-            JButton acceptButton = new JButton("Accepter");
+            JButton acceptButton = new JButton("Accept");
             FeedModeratorController feedModeratorController = new FeedModeratorController();
             acceptButton.addActionListener(e -> {
                 // keskispass quand on clique sur accepter
@@ -47,7 +48,7 @@ public class FeedModerator {
                 masterView.loadWindow("feed_moderator");
             });
             actionPanel.add(acceptButton);
-            JButton refuseButton = new JButton("Refuser");
+            JButton refuseButton = new JButton("Refuse");
             refuseButton.addActionListener(e -> {
                 // keskispass quand on clique sur refuser
                 feedModeratorController.refuseMission(post.get(0));
