@@ -7,6 +7,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_database
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+          
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 21
@@ -17,5 +33,18 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml -X
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {1..30}; do
+          if mysqladmin ping -h 127.0.0.1 -u root -p root &> /dev/null; then
+           echo "MySQL is up and running"
+           break
+          fi
+          echo "Waiting for MySQL..."
+          sleep 2
+          done
+      - name: Run database migrations
+        run: |
+          mysql -h 127.0.0.1 -u root -p root test_database < create_table.sql
       - name: Test with Maven
         run: mvn test
