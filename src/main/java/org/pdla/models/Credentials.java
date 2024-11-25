@@ -11,7 +11,7 @@ public class Credentials {
     }
 
     public static void SetTestCredentials(){
-        url = "jdbc:mysql://localhost:3306/pdla_test";
+        url = "jdbc:mysql://localhost:3306/test_database";
         username = "root";
         password = "root";
     }
