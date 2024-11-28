@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS missions (
     mission_id INT AUTO_INCREMENT PRIMARY KEY,
     description VARCHAR(255) NOT NULL,
     user_id INT,
-    mission_state ENUM('waiting', 'valid', 'realized') NOT NULL,
+    mission_state ENUM('waiting', 'valid', 'realized', 'refused') NOT NULL,
     motif VARCHAR(255) DEFAULT '',
     mission_type ENUM('help', 'need_help') NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
