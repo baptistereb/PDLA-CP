@@ -8,10 +8,9 @@ public class AskHelpFormController {
     }
 
     public boolean sendRequest(String description) {
-        UserManagement userManagement = new UserManagement();
         //TODO Check if data is well formated
         MissionManagement missionManagement = new MissionManagement();
-        MissionManagement.createMission(description, userManagement.getMyID(),"need_help");
+        missionManagement.createMission(description, UserManagement.getMyID(),"need_help");
         return true;
     }
 }

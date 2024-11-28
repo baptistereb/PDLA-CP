@@ -35,6 +35,24 @@ public class MissionManagement {
         dbconn.closeConnection();
     }
 
+    public static int getLastCreatedMissionId() {
+        int missionId = -1; // Valeur par défaut si l'ID ne peut pas être récupéré
+        String selectSQL = "SELECT mission_id FROM missions ORDER BY mission_id DESC LIMIT 1";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                missionId = resultSet.getInt("mission_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return missionId;
+    }
+
     public static void terminateMission(int mission_id) {
         String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
@@ -56,7 +74,7 @@ public class MissionManagement {
         }
     }
 
-    public void deleteMission(int mission_id) {
+    public static void deleteMission(int mission_id) {
         String deleteSQL = "DELETE FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
@@ -132,6 +150,28 @@ public class MissionManagement {
         }
 
         return missions;
+    }
+
+    public String getMissionState(int mission_id) {
+        String selectSQL = "SELECT mission_state FROM missions WHERE mission_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+            preparedStatement.setInt(1, mission_id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                   return resultSet.getString("mission_state");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error selecting mission state from the database: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public void validateMission(int mission_id) {
