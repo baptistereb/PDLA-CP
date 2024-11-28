@@ -8,9 +8,8 @@ public class OfferHelpFormController {
     }
 
     public boolean sendOffer(String description) {
-        UserManagement userManagement = new UserManagement();
         //TODO Check if data is well formated
-        MissionManagement.createMission(description, userManagement.getMyID(),"help");
+        MissionManagement.createMission(description, UserManagement.getMyID(),"help");
         return true;
     }
 }
