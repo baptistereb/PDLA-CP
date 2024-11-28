@@ -180,4 +180,31 @@ public class MissionManagement {
         }
         dbconn.closeConnection();
     }
+
+    public static List<String> getUserConnectedToMission(int mission_id) {
+        String selectSQL = "SELECT u.pseudo FROM connections c JOIN users u ON c.user_id = u.user_id WHERE c.mission_id = ?";
+
+        DatabaseConnection dbconn = new DatabaseConnection();
+        List<String> userPseudos = new ArrayList<>();
+
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+            preparedStatement.setInt(1, mission_id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Ajouter les pseudos des utilisateurs à la liste
+                    userPseudos.add(resultSet.getString("pseudo"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching connected users for the mission.");
+            e.printStackTrace();
+        } finally {
+            dbconn.closeConnection();
+        }
+
+        return userPseudos;
+    }
 }

@@ -33,7 +33,15 @@ public class FeedUser {
             postPanel.setLayout(new BorderLayout());
             postPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            JLabel nameLabel = new JLabel("Name : " + UserManagement.getPseudo(Integer.parseInt(post.get(2))) + " ; type : "+ post.get(4));
+
+            JPanel topPanel = new JPanel();
+            topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); // Disposition verticale
+            JLabel nameLabel = new JLabel("Name : " + UserManagement.getPseudo(Integer.parseInt(post.get(2))) + " ; type : "+ post.get(4)+");");
+            JLabel userLabel = new JLabel("User joined : "+String.join(", ", FeedUserController.userJoined(Integer.parseInt(post.get(0)))));
+
+            topPanel.add(nameLabel);
+            topPanel.add(userLabel);
+
             JTextArea postText = new JTextArea(post.get(1));
             postText.setLineWrap(true);
             postText.setWrapStyleWord(true);
@@ -49,7 +57,7 @@ public class FeedUser {
             });
             actionPanel.add(acceptButton);
 
-            postPanel.add(nameLabel, BorderLayout.NORTH);
+            postPanel.add(topPanel, BorderLayout.NORTH);
             postPanel.add(new JScrollPane(postText), BorderLayout.CENTER);
             postPanel.add(actionPanel, BorderLayout.SOUTH);
 
