@@ -1,10 +1,18 @@
 package org.pdla.models;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.pdla.models.UserManagement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserManagementTest {
+
+    @BeforeAll
+    static void setup()
+    {
+        Credentials.SetTestCredentials();
+    }
+
 
     @org.junit.jupiter.api.Test
     void createUser() {
