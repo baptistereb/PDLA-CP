@@ -44,7 +44,7 @@ public class FeedModerator {
             FeedModeratorController feedModeratorController = new FeedModeratorController();
             acceptButton.addActionListener(e -> {
                 // keskispass quand on clique sur accepter
-                feedModeratorController.validateMission(post.get(0));
+                feedModeratorController.validateMission(Integer.parseInt(post.get(0)));
                 masterView.loadWindow("feed_moderator");
             });
             actionPanel.add(acceptButton);
@@ -56,7 +56,7 @@ public class FeedModerator {
             JButton refuseButton = new JButton("Refuse");
             refuseButton.addActionListener(e -> {
                 // keskispass quand on clique sur refuser
-                feedModeratorController.refuseMission(post.get(0), actionText.getText());
+                feedModeratorController.refuseMission(Integer.parseInt(post.get(0)), actionText.getText());
                 masterView.loadWindow("feed_moderator");
             });
             actionPanel.add(refuseButton);

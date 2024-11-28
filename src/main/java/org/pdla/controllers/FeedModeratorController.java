@@ -4,13 +4,13 @@ import org.pdla.models.MissionManagement;
 import org.pdla.models.UserManagement;
 
 public class FeedModeratorController {
-    public void validateMission(String s) {
+    public void validateMission(int s) {
         MissionManagement missionManagement = new MissionManagement();
-        missionManagement.validateMission(Integer.parseInt(s));
+        missionManagement.validateMission(s);
     }
 
-    public void refuseMission(String s, String reason) {
+    public void refuseMission(int s, String reason) {
         MissionManagement missionManagement = new MissionManagement();
-        missionManagement.refuseMission(Integer.parseInt(s), reason);
+        missionManagement.refuseMission(s, reason);
     }
 }
