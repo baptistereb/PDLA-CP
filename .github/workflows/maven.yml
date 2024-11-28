@@ -20,8 +20,7 @@ jobs:
           --health-cmd="mysqladmin ping -h localhost -uroot -proot"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
-          
+          --health-retries=10
 
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +34,7 @@ jobs:
         run: mvn -B package --file pom.xml -X
       - name: Wait for MySQL to be ready
         run: |
-          for i in {1..30}; do
+          for i in {1..60}; do
           if mysqladmin ping -h127.0.0.1 -uroot -proot &> /dev/null; then
            echo "MySQL is up and running"
            break
@@ -46,5 +45,8 @@ jobs:
       - name: Run database migrations
         run: |
           mysql -h127.0.0.1 -uroot -proot test_database < create_table.sql
+      - name: Verify MySQL Service
+        run: |
+          mysql -h127.0.0.1 -uroot -proot -e "SHOW DATABASES;"
       - name: Test with Maven
         run: mvn test
