@@ -36,11 +36,13 @@ public class FeedUser {
 
             JPanel topPanel = new JPanel();
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); // Disposition verticale
-            JLabel nameLabel = new JLabel("Name : " + UserManagement.getPseudo(Integer.parseInt(post.get(2))) + " ; type : "+ post.get(4)+");");
-            JLabel userLabel = new JLabel("User joined : "+String.join(", ", FeedUserController.userJoined(Integer.parseInt(post.get(0)))));
+            JLabel nameLabel = new JLabel("Name : " + UserManagement.getPseudo(Integer.parseInt(post.get(2))) + " ; type : "+ post.get(4)+";");
+            JLabel userLabel1 = new JLabel("Beneficiary having joined : "+String.join(", ", FeedUserController.userJoined(Integer.parseInt(post.get(0)), "need_help")));
+            JLabel userLabel2 = new JLabel("Volunteer having joined : "+String.join(", ", FeedUserController.userJoined(Integer.parseInt(post.get(0)), "help")));
 
             topPanel.add(nameLabel);
-            topPanel.add(userLabel);
+            topPanel.add(userLabel1);
+            topPanel.add(userLabel2);
 
             JTextArea postText = new JTextArea(post.get(1));
             postText.setLineWrap(true);
@@ -48,14 +50,27 @@ public class FeedUser {
             postText.setEditable(false);
 
             JPanel actionPanel = new JPanel();
-            JButton acceptButton = new JButton("Join");
-            FeedUserController feedUserController = new FeedUserController();
-            acceptButton.addActionListener(e -> {
-                // keskispass quand on clique sur accepter
-                feedUserController.joinMission(post.get(0));
-                masterView.loadWindow("feed_user");
-            });
-            actionPanel.add(acceptButton);
+
+            if(!FeedUserController.isUserInMission(post.get(0))) {
+                JButton joinButton = new JButton("Join");
+                FeedUserController feedUserController = new FeedUserController();
+                joinButton.addActionListener(e -> {
+                    // keskispass quand on clique sur accepter
+                    feedUserController.joinMission(post.get(0));
+                    masterView.loadWindow("feed_user");
+                });
+                actionPanel.add(joinButton);
+            }
+
+            if(FeedUserController.isItYourMission(Integer.parseInt(post.get(2)))) {
+                JButton terminateButton = new JButton("Terminate the mission");
+                terminateButton.addActionListener(e -> {
+                    // keskispass quand on clique sur accepter
+                    FeedUserController.terminateMission(Integer.parseInt(post.get(0)));
+                    masterView.loadWindow("feed_user");
+                });
+                actionPanel.add(terminateButton);
+            }
 
             postPanel.add(topPanel, BorderLayout.NORTH);
             postPanel.add(new JScrollPane(postText), BorderLayout.CENTER);

@@ -35,6 +35,27 @@ public class MissionManagement {
         dbconn.closeConnection();
     }
 
+    public static void terminateMission(int mission_id) {
+        String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+
+        try (PreparedStatement preparedStatement = dbconn.getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, "realized");
+            preparedStatement.setInt(2, mission_id);
+
+            // Exécuter la requête
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Mission terminated successfully.");
+            } else {
+                System.out.println("Failed to terminate mission.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la terminaison de la mission : " + e.getMessage());
+        }
+    }
+
     public void deleteMission(int mission_id) {
         String deleteSQL = "DELETE FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
@@ -181,8 +202,8 @@ public class MissionManagement {
         dbconn.closeConnection();
     }
 
-    public static List<String> getUserConnectedToMission(int mission_id) {
-        String selectSQL = "SELECT u.pseudo FROM connections c JOIN users u ON c.user_id = u.user_id WHERE c.mission_id = ?";
+    public static List<String> getUserConnectedToMission(int mission_id, String type) {
+        String selectSQL = "SELECT u.pseudo FROM connections c JOIN users u ON c.user_id = u.user_id WHERE c.mission_id = ? AND c.connection_type = ?";
 
         DatabaseConnection dbconn = new DatabaseConnection();
         List<String> userPseudos = new ArrayList<>();
@@ -191,6 +212,7 @@ public class MissionManagement {
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
             preparedStatement.setInt(1, mission_id);
+            preparedStatement.setString(2, type);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
@@ -206,5 +228,34 @@ public class MissionManagement {
         }
 
         return userPseudos;
+    }
+
+    public static boolean isUserInMission(int mission_id, int user_id) {
+        String query = "SELECT 1 FROM connections WHERE mission_id = ? AND user_id = ? " +
+                "UNION " +
+                "SELECT 1 FROM missions WHERE mission_id = ? AND user_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            // Remplissage des paramètres
+            preparedStatement.setInt(1, mission_id);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.setInt(3, mission_id);
+            preparedStatement.setInt(4, user_id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // Si un résultat est trouvé, cela signifie que la condition est vraie
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking if user is in mission: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            dbconn.closeConnection();
+        }
+
+        return false; // Aucun résultat trouvé, donc l'utilisateur n'est pas associé
     }
 }
