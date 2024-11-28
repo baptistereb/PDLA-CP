@@ -38,7 +38,7 @@ public class FeedVolunteer {
             JPanel topPanel = new JPanel();
             topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS)); // Disposition verticale
             JLabel nameLabel = new JLabel("Name : " + UserManagement.getPseudo(Integer.parseInt(post.get(2))) + " ; type : "+ post.get(4)+");");
-            JLabel userLabel = new JLabel("User joined : "+String.join(", ", FeedUserController.userJoined(Integer.parseInt(post.get(0)))));
+            JLabel userLabel = new JLabel("User joined : "+String.join(", ", FeedVolunteerController.userJoined(Integer.parseInt(post.get(0)))));
 
             topPanel.add(nameLabel);
             topPanel.add(userLabel);
