@@ -12,6 +12,6 @@ public class FeedVolunteerController {
 
     public void joinMission(String mission_id) {
         MissionManagement missionManagement = new MissionManagement();
-        missionManagement.joinMission(Integer.parseInt(mission_id), UserManagement.getMyID(), "need_help");
+        missionManagement.joinMission(Integer.parseInt(mission_id), UserManagement.getMyID(), "help");
     }
 }
