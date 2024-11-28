@@ -139,7 +139,7 @@ public class MissionManagement {
         DatabaseConnection dbconn = new DatabaseConnection();
 
         try (PreparedStatement preparedStatement = dbconn.getConnection().prepareStatement(query)) {
-            preparedStatement.setString(1, "realized");
+            preparedStatement.setString(1, "refused");
             preparedStatement.setString(2, reason);
             preparedStatement.setInt(3, mission_id);
 
