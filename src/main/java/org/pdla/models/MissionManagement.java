@@ -35,30 +35,6 @@ public class MissionManagement {
         dbconn.closeConnection();
     }
 
-    public int searchMissionID ( String description){
-        String selectSQL = "SELECT mission_id FROM missions WHERE description = ?";
-        DatabaseConnection dbconn = new DatabaseConnection();
-        int mission_id = 0;
-        try (Connection connection = dbconn.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-
-            preparedStatement.setString(1, description);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    mission_id = resultSet.getInt("mission_id");
-                }
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error selecting mission_id from the database: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return mission_id;
-    }
-
-
     public void deleteMission(int mission_id) {
         String deleteSQL = "DELETE FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
