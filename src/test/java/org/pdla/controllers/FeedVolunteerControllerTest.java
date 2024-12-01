@@ -9,7 +9,7 @@ import org.pdla.models.UserManagement;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class FeedUserControllerTest {
+class FeedVolunteerControllerTest {
 
     @BeforeAll
     static void setup()
@@ -17,16 +17,15 @@ class FeedUserControllerTest {
         Credentials.SetTestCredentials();
         SignupFormController signupFormController = new SignupFormController();
         LoginFormController loginFormController = new LoginFormController();
-        signupFormController.Signup("test", "test", "user");
+        signupFormController.Signup("test", "test", "volunteer");
         loginFormController.Login("test", "test");
     }
-    
 
     @org.junit.jupiter.api.Test
     void joinMission() {
-       FeedUserController feedusercontroller = new FeedUserController();
-        MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
-        feedusercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
+        FeedVolunteerController feedvolunteercontroller = new FeedVolunteerController();
+        MissionManagement.createMission("test", UserManagement.getMyID(), "help");
+        feedvolunteercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
         assertTrue(MissionManagement.isUserInMission(MissionManagement.getLastCreatedMissionId(), UserManagement.getMyID()));
         ConnectionManagement.DeleteConnection(ConnectionManagement.getLastCreatedConnection());
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
@@ -35,9 +34,9 @@ class FeedUserControllerTest {
     @org.junit.jupiter.api.Test
     void terminateMission() {
         MissionManagement missionManagement = new MissionManagement();
-        FeedUserController feedusercontroller = new FeedUserController();
-        MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
-        feedusercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
+        FeedVolunteerController feedvolunteercontroller = new FeedVolunteerController();
+        MissionManagement.createMission("test", UserManagement.getMyID(), "help");
+        feedvolunteercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
         FeedUserController.terminateMission(MissionManagement.getLastCreatedMissionId());
         assertEquals("realized", missionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
         ConnectionManagement.DeleteConnection(ConnectionManagement.getLastCreatedConnection());
