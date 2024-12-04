@@ -2,25 +2,26 @@ package org.pdla.models;
 
 public class Credentials {
     // Hardcoded credentials
-    private static String url = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/projet_gei_033";
-    private static String username = "projet_gei_033";
-    private static String password = "vo6Ahc4d";
-
+    private static String dbUrl;
+    private static String dbUser;
+    private static String dbPassword;
     public String getUrl() {
-        return url;
+        return dbUrl;
     }
 
     public static void SetTestCredentials(){
-        url = "jdbc:mysql://localhost:3306/test_database";
-        username = "root";
-        password = "root";
+        dbUrl = System.getProperty("db.url");
+        dbUser = System.getProperty("db.user");
+        dbPassword = System.getProperty("db.password");
+
+        System.out.println("Using DB URL: " + dbUrl);
     }
 
     public String getUsername() {
-        return username;
+        return dbUser;
     }
 
     public String getPassword() {
-        return password;
+        return dbPassword;
     }
 }
