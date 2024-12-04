@@ -1,4 +1,5 @@
-package org.pdla;
+package org.pdla.models;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,8 +19,6 @@ public class DatabaseConnection {
                     credentials.getPassword()
             );
 
-            System.out.println("Connection established successfully.");
-
         } catch (SQLException e) {
             System.out.println("Failed to connect to the database.");
             e.printStackTrace();
@@ -37,7 +36,6 @@ public class DatabaseConnection {
         if (connection != null) {
             try {
                 connection.close();
-                System.out.println("Connection closed.");
             } catch (SQLException e) {
                 System.out.println("Failed to close the connection.");
                 e.printStackTrace();
