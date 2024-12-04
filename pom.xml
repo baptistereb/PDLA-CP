@@ -11,6 +11,9 @@
     <profiles>
         <profile>
             <id>remote</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <db.url>jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/projet_gei_033</db.url>
                 <db.user>projet_gei_033</db.user>
