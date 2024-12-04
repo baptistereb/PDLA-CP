@@ -16,7 +16,6 @@ To run the project, ensure you have the following:
    mvn clean compile
    mvn exec:java -Dexec.mainClass="org.pdla.Main"
    ```
----
 
 ## Run Tests
 
@@ -51,7 +50,6 @@ mvn test -P remote
 ### 3. Alternative: Use GitHub CI
 A **GitHub CI workflow** is already configured to handle `mvn test -P local` with a clean and automated setup.  
 You can use it as a reference or for running tests.
----
 
 ## Structure SQL
 - users (<u>user_id</u>, pseudo, password, user_type {user, volunteer, moderator})
