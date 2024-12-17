@@ -6,7 +6,7 @@ import org.pdla.models.Credentials;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class AskHelpFormControllerTest {
+class OfferHelpFormControllerTest {
 
     @BeforeAll
     static void setup()
@@ -17,6 +17,6 @@ class AskHelpFormControllerTest {
     @org.junit.jupiter.api.Test
     void sendRequest() {
         OfferHelpFormController offerHelpFormController = new OfferHelpFormController();
-        assertTrue(offerHelpFormController.sendRequest("description"));
+        assertTrue(offerHelpFormController.sendOffer("description"));
     }
 }
