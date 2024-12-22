@@ -19,7 +19,6 @@ public class MissionManagementTest {
         userManagement = new UserManagement();
         userManagement.CreateUser("AAA", "AAA", "volunteer");
         user_test_id = userManagement.getID("AAA");
-        System.out.println("-------XXX    " +userManagement.getID("AAA"));
 
         missionManagement = new MissionManagement();
 

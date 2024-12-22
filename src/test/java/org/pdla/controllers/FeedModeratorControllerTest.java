@@ -1,5 +1,6 @@
 package org.pdla.controllers;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.pdla.models.Credentials;
@@ -12,14 +13,14 @@ class FeedModeratorControllerTest {
 
 
     @BeforeAll
-        static void setup()
-        {
-            Credentials.SetTestCredentials();
-            SignupFormController signupFormController = new SignupFormController();
-            LoginFormController loginFormController = new LoginFormController();
-            signupFormController.Signup("test", "test", "moderator");
-            loginFormController.Login("test", "test");
-        }
+    static void setup()
+    {
+        Credentials.SetTestCredentials();
+        SignupFormController signupFormController = new SignupFormController();
+        LoginFormController loginFormController = new LoginFormController();
+        signupFormController.Signup("test", "test", "moderator");
+        loginFormController.Login("test", "test");
+    }
 
     @org.junit.jupiter.api.Test
     void validateMission() {
