@@ -53,6 +53,24 @@ public class MissionManagement {
         return missionId;
     }
 
+    public static boolean missionExists(int mission_id) {
+        String SQL = "SELECT * FROM missions WHERE mission_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setInt(1, mission_id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking if a mission exists in the database.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void terminateMission(int mission_id) {
         String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
@@ -152,7 +170,7 @@ public class MissionManagement {
         return missions;
     }
 
-    public String getMissionState(int mission_id) {
+    public static String getMissionState(int mission_id) {
         String selectSQL = "SELECT mission_state FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
 
@@ -174,7 +192,7 @@ public class MissionManagement {
         return null;
     }
 
-    public void validateMission(int mission_id) {
+    public static void validateMission(int mission_id) {
         String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
 
@@ -195,7 +213,7 @@ public class MissionManagement {
         }
     }
 
-    public void refuseMission(int mission_id, String reason) {
+    public static void refuseMission(int mission_id, String reason) {
         String query = "UPDATE missions SET mission_state = ?, motif = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
 

@@ -90,6 +90,29 @@ public class UserManagement {
         return user_id;
     }
 
+    public static int getID(String pseudo) {
+        String SQL = "SELECT id FROM users WHERE pseudo = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, pseudo);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("pseudo");
+                } else {
+                    System.out.println("Error : User not found"); // Ou gérer autrement si l'utilisateur n'existe pas
+                    System.exit(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting the ID corresponding to a user in the database.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return -1;
+    }
 
     public static String getPseudo(int user_id) {
         String SQL = "SELECT pseudo FROM users WHERE user_id = ?";
