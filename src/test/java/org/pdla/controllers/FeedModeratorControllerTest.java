@@ -29,23 +29,21 @@ class FeedModeratorControllerTest {
 
     @org.junit.jupiter.api.Test
     void validateMission() {
-        MissionManagement missionManagement = new MissionManagement();
-        FeedModeratorController feedModeratorController = new FeedModeratorController();
+       FeedModeratorController feedModeratorController = new FeedModeratorController();
         MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
         feedModeratorController.validateMission(MissionManagement.getLastCreatedMissionId());
 
-        assertEquals("valid", missionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
+        assertEquals("valid", MissionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }
 
     @org.junit.jupiter.api.Test
     void refuseMission() {
-        MissionManagement missionManagement = new MissionManagement();
         FeedModeratorController feedModeratorController = new FeedModeratorController();
         MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
         feedModeratorController.refuseMission(MissionManagement.getLastCreatedMissionId(), "test");
 
-        assertEquals("refused", missionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
+        assertEquals("refused", MissionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }
 }

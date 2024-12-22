@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MissionManagementTest {
 
-    private static MissionManagement missionManagement;
     private static UserManagement userManagement;
     private static int mission_test_id;
     private static int user_test_id;
@@ -18,29 +17,27 @@ public class MissionManagementTest {
 
         userManagement = new UserManagement();
         userManagement.CreateUser("AAA", "AAA", "volunteer");
-        user_test_id = userManagement.getID("AAA");
+        user_test_id = UserManagement.getID("AAA");
 
-        missionManagement = new MissionManagement();
-
-        missionManagement.createMission("AAA", user_test_id, "help");
+        MissionManagement.createMission("AAA", user_test_id, "help");
         mission_test_id = MissionManagement.getLastCreatedMissionId();
     }
 
     @AfterAll
     static void Clear() {
         MissionManagement.deleteMission(mission_test_id); // on supprimer la mission
-        userManagement.DeleteUser("AAA"); // on supprime l'utilisateur
+        UserManagement.DeleteUser("AAA"); // on supprime l'utilisateur
     }
 
     @org.junit.jupiter.api.Test
     void createMission() {
-        assertDoesNotThrow(() -> missionManagement.createMission("BBB", user_test_id, "help"));
+        assertDoesNotThrow(() -> MissionManagement.createMission("BBB", user_test_id, "help"));
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId()); // on supprimer la mission
     }
 
     @org.junit.jupiter.api.Test
     void deleteMission() {
-        missionManagement.createMission("CCC", user_test_id, "help");
+        MissionManagement.createMission("CCC", user_test_id, "help");
         int mission_id = MissionManagement.getID("CCC");
         assertDoesNotThrow(() -> MissionManagement.deleteMission(mission_id));
         assertFalse(MissionManagement.missionExists(mission_id));

@@ -1,5 +1,6 @@
 package org.pdla.models;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -24,9 +25,9 @@ class UserManagementTest {
         assertDoesNotThrow(() -> userManagement.CreateUser("AAA", "AAA", "volunteer"));
         assertDoesNotThrow(() -> userManagement.CreateUser("BBB", "BBB", "user"));
         assertDoesNotThrow(() -> userManagement.CreateUser("CCC", "CCC", "moderator"));
-        userManagement.DeleteUser("AAA");
-        userManagement.DeleteUser("BBB");
-        userManagement.DeleteUser("CCC");
+        UserManagement.DeleteUser("AAA");
+        UserManagement.DeleteUser("BBB");
+        UserManagement.DeleteUser("CCC");
     }
 
     @org.junit.jupiter.api.Test
@@ -37,7 +38,7 @@ class UserManagementTest {
         assertFalse(userManagement.Login("AAA", "tracs2024"));
         assertFalse(userManagement.Login("oula", "a_really_secure_password"));
 
-        userManagement.DeleteUser("BBBBB");
+        UserManagement.DeleteUser("BBBBB");
     }
 
     @org.junit.jupiter.api.Test
@@ -46,14 +47,14 @@ class UserManagementTest {
 
         assertTrue(userManagement.UserExists("AAA"));
 
-        userManagement.DeleteUser("AAA");
+        UserManagement.DeleteUser("AAA");
     }
 
     @org.junit.jupiter.api.Test
     void deleteUser() {
         userManagement.CreateUser("AAA", "AAA", "volunteer");
 
-        assertDoesNotThrow(() -> userManagement.DeleteUser("AAA"));
+        assertDoesNotThrow(() -> UserManagement.DeleteUser("AAA"));
 
         assertFalse(userManagement.UserExists("AAA"));
     }
@@ -68,8 +69,8 @@ class UserManagementTest {
         assertEquals("user", userManagement.getUserType("BBB"));
         assertEquals("moderator", userManagement.getUserType("CCC"));
 
-        userManagement.DeleteUser("AAA");
-        userManagement.DeleteUser("BBB");
-        userManagement.DeleteUser("CCC");
+        UserManagement.DeleteUser("AAA");
+        UserManagement.DeleteUser("BBB");
+        UserManagement.DeleteUser("CCC");
     }
 }
