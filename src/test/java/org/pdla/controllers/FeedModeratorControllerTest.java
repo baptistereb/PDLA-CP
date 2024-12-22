@@ -32,7 +32,14 @@ class FeedModeratorControllerTest {
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void refuseMission() {
+        MissionManagement missionManagement = new MissionManagement();
+        FeedModeratorController feedModeratorController = new FeedModeratorController();
+        MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
+        feedModeratorController.refuseMission(MissionManagement.getLastCreatedMissionId(), "test");
+
+        assertEquals("refused", missionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
+        MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }
 }
