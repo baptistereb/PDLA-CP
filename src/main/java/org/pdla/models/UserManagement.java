@@ -91,7 +91,7 @@ public class UserManagement {
     }
 
     public static int getID(String pseudo) {
-        String SQL = "SELECT id FROM users WHERE pseudo = ?";
+        String SQL = "SELECT user_id FROM users WHERE pseudo = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
@@ -100,7 +100,7 @@ public class UserManagement {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("pseudo");
+                    return resultSet.getInt("user_id");
                 } else {
                     System.out.println("Error : User not found"); // Ou gérer autrement si l'utilisateur n'existe pas
                     System.exit(1);
