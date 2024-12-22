@@ -1,5 +1,6 @@
 package org.pdla.controllers;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.pdla.models.ConnectionManagement;
 import org.pdla.models.Credentials;
@@ -20,26 +21,30 @@ class FeedUserControllerTest {
         signupFormController.Signup("test", "test", "user");
         loginFormController.Login("test", "test");
     }
-    
+
+    @AfterAll
+    static void cleanUp()
+    {
+        UserManagement.DeleteUser("test");
+    }
 
     @org.junit.jupiter.api.Test
     void joinMission() {
        FeedUserController feedusercontroller = new FeedUserController();
         MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
         feedusercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
-        assertTrue(MissionManagement.isUserInMission(MissionManagement.getLastCreatedMissionId(), UserManagement.getMyID()));
+        assertTrue(ConnectionManagement.isUserInMission(MissionManagement.getLastCreatedMissionId(), UserManagement.getMyID()));
         ConnectionManagement.DeleteConnection(ConnectionManagement.getLastCreatedConnection());
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }
 
     @org.junit.jupiter.api.Test
     void terminateMission() {
-        MissionManagement missionManagement = new MissionManagement();
         FeedUserController feedusercontroller = new FeedUserController();
         MissionManagement.createMission("test", UserManagement.getMyID(), "need_help");
         feedusercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
         FeedUserController.terminateMission(MissionManagement.getLastCreatedMissionId());
-        assertEquals("realized", missionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
+        assertEquals("realized", MissionManagement.getMissionState(MissionManagement.getLastCreatedMissionId()));
         ConnectionManagement.DeleteConnection(ConnectionManagement.getLastCreatedConnection());
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }

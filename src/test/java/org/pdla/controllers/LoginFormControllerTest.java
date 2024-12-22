@@ -26,8 +26,7 @@ class LoginFormControllerTest
         assertFalse(loginFormController.Login("", ""));
         assertFalse(loginFormController.Login("test", ""));
         assertFalse(loginFormController.Login("", "test"));
-        UserManagement userManagement = new UserManagement();
-        userManagement.DeleteUser("test2");
+        UserManagement.DeleteUser("test2");
     }
 
 }

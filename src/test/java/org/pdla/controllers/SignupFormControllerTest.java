@@ -20,8 +20,7 @@ class SignupFormControllerTest {
         SignupFormController signupFormController = new SignupFormController();
         assertTrue(signupFormController.Signup("test1", "test1", "user"));
         assertFalse(signupFormController.Signup("test1", "test1", "user"));
-        UserManagement userManagement = new UserManagement();
-        userManagement.DeleteUser("test1");
+        UserManagement.DeleteUser("test1");
         assertFalse(signupFormController.Signup("", "", ""));
         assertFalse(signupFormController.Signup("test", "", ""));
         assertFalse(signupFormController.Signup("", "test", ""));

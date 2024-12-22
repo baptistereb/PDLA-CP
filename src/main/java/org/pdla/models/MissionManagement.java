@@ -53,6 +53,48 @@ public class MissionManagement {
         return missionId;
     }
 
+    public static int getID(String description) {
+        String SQL = "SELECT mission_id FROM missions WHERE description = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, description);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("mission_id");
+                } else {
+                    System.out.println("Error : Mission not found"); // Ou gérer autrement si l'utilisateur n'existe pas
+                    System.exit(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting the ID corresponding to a mission in the database.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return -1;
+    }
+
+    public static boolean missionExists(int mission_id) {
+        String SQL = "SELECT * FROM missions WHERE mission_id = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setInt(1, mission_id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking if a mission exists in the database.");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void terminateMission(int mission_id) {
         String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
@@ -124,35 +166,7 @@ public class MissionManagement {
         return missions;
     }
 
-    public List<List<String>> getMissionsbytype(String mission_type) {
-        String selectSQL = "SELECT * FROM missions WHERE mission_type = '" + mission_type + "'";
-        DatabaseConnection dbconn = new DatabaseConnection();
-
-        List<List<String>> missions = new ArrayList<>();
-
-        try (Connection connection = dbconn.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                missions.add(Arrays.asList(
-                        resultSet.getString("mission_id"),
-                        resultSet.getString("description"),
-                        resultSet.getString("user_id"),
-                        resultSet.getString("mission_state"),
-                        resultSet.getString("mission_type")
-                ));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error selecting missions from the database: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return missions;
-    }
-
-    public String getMissionState(int mission_id) {
+    public static String getMissionState(int mission_id) {
         String selectSQL = "SELECT mission_state FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
 
@@ -174,7 +188,7 @@ public class MissionManagement {
         return null;
     }
 
-    public void validateMission(int mission_id) {
+    public static void validateMission(int mission_id) {
         String query = "UPDATE missions SET mission_state = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
 
@@ -195,7 +209,7 @@ public class MissionManagement {
         }
     }
 
-    public void refuseMission(int mission_id, String reason) {
+    public static void refuseMission(int mission_id, String reason) {
         String query = "UPDATE missions SET mission_state = ?, motif = ? WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
 
@@ -215,87 +229,5 @@ public class MissionManagement {
         } catch (SQLException e) {
             System.err.println("Erreur lors de la validation de la mission : " + e.getMessage());
         }
-    }
-
-    public void joinMission(int mission_id, int myID, String connection_type) {
-        String insertSQL = "INSERT INTO connections (mission_id, user_id, connection_type) VALUES (?, ?, ?)";
-        DatabaseConnection dbconn = new DatabaseConnection();
-        try (Connection connection = dbconn.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-
-            preparedStatement.setInt(1, mission_id);
-            preparedStatement.setInt(2, myID);
-            preparedStatement.setString(3, connection_type);
-
-            int rowsInserted = preparedStatement.executeUpdate();
-
-            if (rowsInserted > 0) {
-                System.out.println("Join the mission inserted successfully.");
-            } else {
-                System.out.println("Failed to join the mission.");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error inserting connection into the database.");
-            e.printStackTrace();
-        }
-        dbconn.closeConnection();
-    }
-
-    public static List<String> getUserConnectedToMission(int mission_id, String type) {
-        String selectSQL = "SELECT u.pseudo FROM connections c JOIN users u ON c.user_id = u.user_id WHERE c.mission_id = ? AND c.connection_type = ?";
-
-        DatabaseConnection dbconn = new DatabaseConnection();
-        List<String> userPseudos = new ArrayList<>();
-
-        try (Connection connection = dbconn.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-
-            preparedStatement.setInt(1, mission_id);
-            preparedStatement.setString(2, type);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    // Ajouter les pseudos des utilisateurs à la liste
-                    userPseudos.add(resultSet.getString("pseudo"));
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error fetching connected users for the mission.");
-            e.printStackTrace();
-        } finally {
-            dbconn.closeConnection();
-        }
-
-        return userPseudos;
-    }
-
-    public static boolean isUserInMission(int mission_id, int user_id) {
-        String query = "SELECT 1 FROM connections WHERE mission_id = ? AND user_id = ? " +
-                "UNION " +
-                "SELECT 1 FROM missions WHERE mission_id = ? AND user_id = ?";
-        DatabaseConnection dbconn = new DatabaseConnection();
-
-        try (Connection connection = dbconn.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            // Remplissage des paramètres
-            preparedStatement.setInt(1, mission_id);
-            preparedStatement.setInt(2, user_id);
-            preparedStatement.setInt(3, mission_id);
-            preparedStatement.setInt(4, user_id);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                // Si un résultat est trouvé, cela signifie que la condition est vraie
-                return resultSet.next();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error checking if user is in mission: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            dbconn.closeConnection();
-        }
-
-        return false; // Aucun résultat trouvé, donc l'utilisateur n'est pas associé
     }
 }
