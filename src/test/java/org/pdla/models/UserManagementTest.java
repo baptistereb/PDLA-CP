@@ -31,13 +31,13 @@ class UserManagementTest {
 
     @org.junit.jupiter.api.Test
     void login() {
-        userManagement.CreateUser("AAA", "a_really_secure_password", "volunteer");
+        userManagement.CreateUser("BBBBB", "a_really_secure_password", "volunteer");
 
-        assertTrue(userManagement.Login("AAA", "a_really_secure_password"));
+        assertTrue(userManagement.Login("BBBBB", "a_really_secure_password"));
         assertFalse(userManagement.Login("AAA", "tracs2024"));
         assertFalse(userManagement.Login("oula", "a_really_secure_password"));
 
-        userManagement.DeleteUser("AAA");
+        userManagement.DeleteUser("BBBBB");
     }
 
     @org.junit.jupiter.api.Test
@@ -64,9 +64,9 @@ class UserManagementTest {
         userManagement.CreateUser("BBB", "BBB", "user");
         userManagement.CreateUser("CCC", "CCC", "moderator");
 
-        assertEquals(userManagement.getUserType("AAA"), "volunteer");
-        assertEquals(userManagement.getUserType("BBB"), "user");
-        assertEquals(userManagement.getUserType("CCC"), "moderator");
+        assertEquals("volunteer", userManagement.getUserType("AAA"));
+        assertEquals("user", userManagement.getUserType("BBB"));
+        assertEquals("moderator", userManagement.getUserType("CCC"));
 
         userManagement.DeleteUser("AAA");
         userManagement.DeleteUser("BBB");
