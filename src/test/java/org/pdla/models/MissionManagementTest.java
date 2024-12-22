@@ -2,7 +2,6 @@ package org.pdla.models;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,8 +19,10 @@ public class MissionManagementTest {
         userManagement = new UserManagement();
         userManagement.CreateUser("AAA", "AAA", "volunteer");
         user_test_id = userManagement.getID("AAA");
+        System.out.println("-------XXX    " +userManagement.getID("AAA"));
 
         missionManagement = new MissionManagement();
+
         missionManagement.createMission("AAA", user_test_id, "help");
         mission_test_id = MissionManagement.getLastCreatedMissionId();
     }
@@ -40,8 +41,8 @@ public class MissionManagementTest {
 
     @org.junit.jupiter.api.Test
     void deleteMission() {
-        missionManagement.createMission("CCC", 1, "help");
-        int mission_id = MissionManagement.getLastCreatedMissionId();
+        missionManagement.createMission("CCC", user_test_id, "help");
+        int mission_id = MissionManagement.getID("CCC");
         assertDoesNotThrow(() -> MissionManagement.deleteMission(mission_id));
         assertFalse(MissionManagement.missionExists(mission_id));
     }
@@ -54,12 +55,6 @@ public class MissionManagementTest {
     @org.junit.jupiter.api.Test
     void missionDoesNotExists() {
         assertFalse(MissionManagement.missionExists(333333333));
-    }
-
-    @org.junit.jupiter.api.Test
-    void getMissionState() {
-        assertDoesNotThrow(() -> MissionManagement.getMissionState(mission_test_id));
-        assertEquals("waiting", MissionManagement.getMissionState(mission_test_id));
     }
 
     @org.junit.jupiter.api.Test

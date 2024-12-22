@@ -53,6 +53,30 @@ public class MissionManagement {
         return missionId;
     }
 
+    public static int getID(String description) {
+        String SQL = "SELECT mission_id FROM missions WHERE description = ?";
+        DatabaseConnection dbconn = new DatabaseConnection();
+        try (Connection connection = dbconn.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, description);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("mission_id");
+                } else {
+                    System.out.println("Error : Mission not found"); // Ou gérer autrement si l'utilisateur n'existe pas
+                    System.exit(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting the ID corresponding to a mission in the database.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return -1;
+    }
+
     public static boolean missionExists(int mission_id) {
         String SQL = "SELECT * FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
