@@ -1,5 +1,6 @@
 package org.pdla.controllers;
 
+import org.pdla.models.ConnectionManagement;
 import org.pdla.models.MissionManagement;
 import org.pdla.models.UserManagement;
 
@@ -7,16 +8,15 @@ import java.util.List;
 
 public class FeedUserController {
     public static List<String> userJoined(int postId, String type) {
-        return MissionManagement.getUserConnectedToMission(postId, type);
+        return ConnectionManagement.getUserConnectedToMission(postId, type);
     }
 
     public void joinMission(String mission_id) {
-        MissionManagement missionManagement = new MissionManagement();
-        missionManagement.joinMission(Integer.parseInt(mission_id), UserManagement.getMyID(), "need_help");
+        ConnectionManagement.joinMission(Integer.parseInt(mission_id), UserManagement.getMyID(), "need_help");
     }
 
     public static boolean isUserInMission(String mission_id) {
-        return MissionManagement.isUserInMission(Integer.parseInt(mission_id), UserManagement.getMyID());
+        return ConnectionManagement.isUserInMission(Integer.parseInt(mission_id), UserManagement.getMyID());
     }
 
     public static boolean isItYourMission(int mission_creator_id) {
