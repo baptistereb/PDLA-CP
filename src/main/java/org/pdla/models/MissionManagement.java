@@ -166,34 +166,6 @@ public class MissionManagement {
         return missions;
     }
 
-    public List<List<String>> getMissionsbytype(String mission_type) {
-        String selectSQL = "SELECT * FROM missions WHERE mission_type = '" + mission_type + "'";
-        DatabaseConnection dbconn = new DatabaseConnection();
-
-        List<List<String>> missions = new ArrayList<>();
-
-        try (Connection connection = dbconn.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
-
-            while (resultSet.next()) {
-                missions.add(Arrays.asList(
-                        resultSet.getString("mission_id"),
-                        resultSet.getString("description"),
-                        resultSet.getString("user_id"),
-                        resultSet.getString("mission_state"),
-                        resultSet.getString("mission_type")
-                ));
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error selecting missions from the database: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return missions;
-    }
-
     public static String getMissionState(int mission_id) {
         String selectSQL = "SELECT mission_state FROM missions WHERE mission_id = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
