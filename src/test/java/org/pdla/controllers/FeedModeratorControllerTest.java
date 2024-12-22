@@ -22,6 +22,11 @@ class FeedModeratorControllerTest {
         loginFormController.Login("test", "test");
     }
 
+    @AfterAll
+    static void clear() {
+        UserManagement.DeleteUser("test");
+    }
+
     @org.junit.jupiter.api.Test
     void validateMission() {
         MissionManagement missionManagement = new MissionManagement();

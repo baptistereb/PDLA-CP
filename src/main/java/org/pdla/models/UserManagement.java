@@ -35,7 +35,7 @@ public class UserManagement {
         dbconn.closeConnection();
     }
 
-    public void DeleteUser(String username) {
+    public static void DeleteUser(String username) {
         String deleteSQL = "DELETE FROM users WHERE pseudo = ?";
         DatabaseConnection dbconn = new DatabaseConnection();
         try (Connection connection = dbconn.getConnection();
