@@ -26,7 +26,7 @@ class FeedVolunteerControllerTest {
         FeedVolunteerController feedvolunteercontroller = new FeedVolunteerController();
         MissionManagement.createMission("test", UserManagement.getMyID(), "help");
         feedvolunteercontroller.joinMission(Integer.toString(MissionManagement.getLastCreatedMissionId()));
-        assertTrue(MissionManagement.isUserInMission(MissionManagement.getLastCreatedMissionId(), UserManagement.getMyID()));
+        assertTrue(ConnectionManagement.isUserInMission(MissionManagement.getLastCreatedMissionId(), UserManagement.getMyID()));
         ConnectionManagement.DeleteConnection(ConnectionManagement.getLastCreatedConnection());
         MissionManagement.deleteMission(MissionManagement.getLastCreatedMissionId());
     }
